@@ -1,0 +1,17 @@
+{
+  "name": "hajzi-pro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "حجزي Pro — نظام حجز مواعيد متعدد الصالونات (Full-stack, zero-dependency)",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js",
+    "reset": "node scripts/reset.js"
+  },
+  "dependencies": {}
+}
