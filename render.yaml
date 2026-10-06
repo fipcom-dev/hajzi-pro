@@ -1,0 +1,54 @@
+# Render Blueprint — نشر تلقائي لخادم حجزي Pro
+# الاستخدام: Render Dashboard ← New ← Blueprint ← اختر المستودع الذي يحتوي هذا الملف.
+services:
+  - type: web
+    name: hajzi-pro
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free                 # للتخزين الدائم استخدم starter وأضف قرصاً (انظر الأسفل)
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HAJZI_DB
+        value: /data/hajzi.db
+      # مفتاح توقيع جلسات JWT — يُولَّد تلقائياً وقيمته عشوائية آمنة
+      - key: HAJZI_SECRET
+        generateValue: true
+      # مزوّد الواتساب: simulated | meta | twilio | ultramsg | greenapi | webhook
+      - key: WHATSAPP_PROVIDER
+        value: simulated
+      # رابط الموقع العام (روابط الدفع/العودة) — يُملأ بعد أول نشر بعنوان الخدمة
+      - key: HAJZI_PUBLIC_URL
+        sync: false
+      # مفاتيح مزوّد الواتساب (اتركها فارغة حتى تختار المزوّد)
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: ULTRAMSG_INSTANCE_ID
+        sync: false
+      - key: ULTRAMSG_TOKEN
+        sync: false
+      - key: GREENAPI_ID_INSTANCE
+        sync: false
+      - key: GREENAPI_TOKEN
+        sync: false
+      - key: WHATSAPP_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_ID
+        sync: false
+      - key: WHATSAPP_WEBHOOK_URL
+        sync: false
+      - key: WHATSAPP_WEBHOOK_TOKEN
+        sync: false
+
+# --- تخزين دائم (يتطلب خطة مدفوعة) ---
+# أزل التعليق واستخدم plan: starter لحفظ قاعدة البيانات بين عمليات النشر.
+#    disk:
+#      name: hajzi-data
+#      mountPath: /data
+#      sizeGB: 1
